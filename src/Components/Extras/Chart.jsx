@@ -47,7 +47,8 @@ const Chart = ({ Data }) => {
     .map((data) => data.year);
   console.log(labels);
 
-  window.onresize = () => {
+  const getWidth = () => {
+    
     window.innerWidth <= 500
       ? dispatch(setXAxis("Population"))
       : dispatch(setXAxis("Year"));
@@ -57,7 +58,10 @@ const Chart = ({ Data }) => {
       window.innerWidth <= 500
         ? dispatch(setDirection("y"))
         : dispatch(setDirection("x"));
-  };
+  }
+
+  window.onresize = () => getWidth();
+  window.onload = () => getWidth();
 
 
   useEffect(() => {
