@@ -33,7 +33,7 @@ const Population = () => {
   return (
     <div
       className={`fixed top-0 text-white right-0 ${
-        sidebarToggle ? "w-[80%]" : "w-[96%]"
+        sidebarToggle ? "w-[80%]" : "md:w-[96%] w-[92%]"
       } h-[100%] overflow-y-auto p-8 bg-blackish transition-all duration-300 ease-in-out flex flex-col gap-12`}
     >
       <div className="text-white">
@@ -42,7 +42,7 @@ const Population = () => {
         </h1>
         <p>Welcome to Population Growth Rate Analysis!</p>
       </div>
-      <div className="flex flex-wrap justify-around gap-y-8">
+      <div className="flex flex-wrap justify-around gap-8">
       {populationData.length >= 4 && populationData.map((population, idx) => {
           return <Chart key={idx + "chartData"} Data={population.data} />
       })}

@@ -10,6 +10,10 @@ export default {
         lightWhite: "#D6D9D7",
         lightGray: "#424343",
       },
+      screens:{
+        "0" : "0px",
+        "475" : "475px",
+      }
     },
   },
   plugins: [],

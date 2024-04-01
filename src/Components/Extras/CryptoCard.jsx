@@ -1,5 +1,7 @@
 import { IoTrendingDown } from "react-icons/io5";
 import { IoTrendingUp } from "react-icons/io5";
+import PropTypes from 'prop-types';
+
 
 const CryptoCard = ({ Data }) => {
   const baseUSDINR = 83.39;
@@ -12,7 +14,7 @@ const CryptoCard = ({ Data }) => {
   const JPN = Number(Data.price * baseUSDJPN).toFixed(2);
 
   return (
-    <div className="w-[15rem] flex flex-col justify-around gap-4 bg-darkGray p-4 rounded-xl">
+    <div className="w-[15rem] flex flex-col justify-around flex-grow gap-4 bg-darkGray p-4 rounded-xl">
       <div className="flex items-center gap-2">
         <div className="w-[4rem] h-[4rem] p-3 rounded-[50%]" style={{border: `1px solid ${Data.color}`}}>
           <img src={Data.iconUrl} className="w-full h-full" alt="" />
@@ -52,6 +54,17 @@ const CryptoCard = ({ Data }) => {
       <button className={`py-2 px-4 rounded-lg font-semibold `} style={{backgroundColor: Data.color}}>Details</button>
     </div>
   );
+};
+
+CryptoCard.propTypes = {
+  Data: PropTypes.shape({
+    price: PropTypes.number,
+    symbol: PropTypes.string,
+    name: PropTypes.string,
+    change: PropTypes.string,
+    iconUrl: PropTypes.string,
+    color: PropTypes.string,
+  }).isRequired,
 };
 
 export default CryptoCard;

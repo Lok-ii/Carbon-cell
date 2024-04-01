@@ -12,6 +12,8 @@ import {
   Legend,
   LineController,
 } from "chart.js";
+import { useDispatch, useSelector } from "react-redux";
+import { setDirection, setXAxis, setYAxis } from "../../redux/populationSlice";
 
 // Register the components you will use
 ChartJS.register(
@@ -28,16 +30,35 @@ ChartJS.register(
 
 const Chart = ({ Data }) => {
   const canvasRef = useRef(null);
+  const dispatch = useDispatch();
+  const { xAxis, yAxis, direction } = useSelector((store) => store.population);
 
-  const chartData = Data.populationCounts.filter((data, idx) => {
-    return idx > 20;
-  }).map((data) => data.value);
+  const chartData = Data.populationCounts
+    .filter((data, idx) => {
+      return idx > 20;
+    })
+    .map((data) => data.value);
   console.log(chartData);
 
-  const labels = Data.populationCounts.filter((data, idx) => {
-    return idx > 20;
-  }).map((data) => data.year);
+  const labels = Data.populationCounts
+    .filter((data, idx) => {
+      return idx > 20;
+    })
+    .map((data) => data.year);
   console.log(labels);
+
+  window.onresize = () => {
+    window.innerWidth <= 500
+      ? dispatch(setXAxis("Population"))
+      : dispatch(setXAxis("Year"));
+    window.innerWidth <= 500
+      ? dispatch(setYAxis("Year"))
+      : dispatch(setYAxis("Population"));
+      window.innerWidth <= 500
+        ? dispatch(setDirection("y"))
+        : dispatch(setDirection("x"));
+  };
+
 
   useEffect(() => {
     let localChartInstance = null;
@@ -72,6 +93,7 @@ const Chart = ({ Data }) => {
           ],
         },
         options: {
+          indexAxis: direction,
           scales: {
             y: {
               beginAtZero: true, // Ensures the scale starts from zero
@@ -83,12 +105,16 @@ const Chart = ({ Data }) => {
                 color: "#D6D9D7", // Color of the axis labels
                 callback: function (value) {
                   // Custom formatting of the axis labels
-                  return value / 1000000 + " M";
+                  if(direction === "x") {
+                    return value / 1000000 + " M";
+                  }else{
+                    return value + 1981;
+                  }
                 },
               },
               title: {
                 display: true,
-                text: 'Population'
+                text: yAxis,
               },
             },
             x: {
@@ -100,7 +126,7 @@ const Chart = ({ Data }) => {
               },
               title: {
                 display: true,
-                text: 'Years'
+                text: xAxis,
               },
             },
           },
@@ -124,7 +150,7 @@ const Chart = ({ Data }) => {
               },
             },
           },
-          maintainAspectRatio: true, // Add this to maintain the aspect ratio
+          maintainAspectRatio: false, // Add this to maintain the aspect ratio
           responsive: true,
           animation: {
             duration: 1000, // General animation time
@@ -151,12 +177,12 @@ const Chart = ({ Data }) => {
     };
   }, [chartData, labels]);
   return (
-    <div className="w-[550px] h-[350px] flex flex-col gap-4 bg-darkGray p-4 rounded-xl">
+    <div className="md:w-[550px] 0:w-[280px] 475:w-[425px] h-[550px] sm:[450px] md:h-[350px] flex flex-col flex-grow gap-4 bg-darkGray p-4 rounded-xl">
       <div className="flex justify-between">
         <p className="text-[1.25rem] font-medium">{Data.country}</p>
       </div>
       <div className="w-full h-full">
-        <canvas ref={canvasRef}></canvas>
+        <canvas className="" ref={canvasRef}></canvas>
       </div>
     </div>
   );
