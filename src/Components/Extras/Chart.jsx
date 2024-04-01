@@ -181,7 +181,7 @@ const Chart = ({ Data }) => {
     };
   }, [chartData, labels]);
   return (
-    <div className="md:w-[550px] 0:w-[280px] 475:w-[425px] h-[550px] sm:[450px] md:h-[350px] flex flex-col flex-grow gap-4 bg-darkGray p-4 rounded-xl">
+    <div className="md:w-[550px] 0:w-[280px] 475:w-[425px] h-[550px] sm:[450px] md:h-[450px] flex flex-col flex-grow gap-4 bg-darkGray p-4 rounded-xl">
       <div className="flex justify-between">
         <p className="text-[1.25rem] font-medium">{Data.country}</p>
       </div>
