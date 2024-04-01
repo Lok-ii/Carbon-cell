@@ -12,7 +12,7 @@ const Sidebar = () => {
   const { sidebarToggle } = useSelector((state) => state.population);
 
   return (
-    <div className={`w-[10rem] md:w-[20%] bg-darkGray h-[100vh] fixed top-0 ${sidebarToggle ? "left-0" : "left-[-8rem] md:left-[-16%]"} z-[5] transition-all duration-300 ease-in-out`}>
+    <div className={`w-[10rem] md:w-[23%] lg:w-[20%] bg-darkGray h-[100vh] fixed top-0 ${sidebarToggle ? "left-0" : "left-[-8rem] md:left-[-16%]"} z-[5] transition-all duration-300 ease-in-out`}>
       <div className="flex justify-between items-center py-4 px-2 md:p-4">
         <div className="w-[50%] h-[12]">
           <img className="w-full h-full" src="https://carboncell.io/assets/img/logo2.png" alt="" />

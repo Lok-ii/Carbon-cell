@@ -58,7 +58,7 @@ const CryptoCard = ({ Data }) => {
 
 CryptoCard.propTypes = {
   Data: PropTypes.shape({
-    price: PropTypes.number,
+    price: PropTypes.string,
     symbol: PropTypes.string,
     name: PropTypes.string,
     change: PropTypes.string,

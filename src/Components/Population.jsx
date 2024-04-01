@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { setPopulation } from "../redux/populationSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Chart from "./Extras/Chart";
+import { Oval } from "react-loader-spinner";
 
 const Population = () => {
   const dispatch = useDispatch();
@@ -29,10 +30,9 @@ const Population = () => {
     countries.forEach(async (country) => await getPouplationData(country));
   }, [dispatch]);
 
-
   return (
     <div
-      className={`fixed top-0 text-white right-0 ${
+      className={`fixed top-0 text-white right-0 ${ 
         sidebarToggle ? "w-[80%]" : "md:w-[96%] w-[92%]"
       } h-[100%] overflow-y-auto p-8 bg-blackish transition-all duration-300 ease-in-out flex flex-col gap-12`}
     >
@@ -43,9 +43,21 @@ const Population = () => {
         <p>Welcome to Population Growth Rate Analysis!</p>
       </div>
       <div className="flex flex-wrap justify-around gap-8">
-      {populationData.length >= 4 && populationData.map((population, idx) => {
-          return <Chart key={idx + "chartData"} Data={population.data} />
-      })}
+        {populationData.length >= 4 ? (
+          populationData.map((population, idx) => {
+            return <Chart key={idx + "chartData"} Data={population.data} />;
+          })
+        ) : (
+          <Oval
+            visible={true}
+            height="80"
+            width="80"
+            color="#4fa94d"
+            ariaLabel="oval-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+          />
+        )}
       </div>
     </div>
   );
