@@ -1,28 +1,27 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCrypto } from "../redux/cryptoSlice";
+import { setCrypto, setCryptoLiked } from "../redux/cryptoSlice";
 import axios from "axios";
 import CryptoCard from "./Extras/CryptoCard";
 import { Oval } from "react-loader-spinner";
 
 const Crypto = () => {
-  const disptach = useDispatch();
-  const { cryptoData } = useSelector((store) => store.crypto);
+  const dispatch = useDispatch();
+  const { cryptoLiked} = useSelector((store) => store.crypto);
   const { sidebarToggle } = useSelector((state) => state.population);
 
-  useEffect(() => {
-    const getCryptoData = async () => {
-      try {
-        const response = await axios.get(
-          "https://api.coinranking.com/v2/coins"
-        );
-        disptach(setCrypto(response.data));
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    getCryptoData();
+  useEffect(() => {const getLiked = async () => {
+    try {
+      const response = await axios.get(
+        "https://api.coingecko.com/api/v3/search/trending?x_cg_demo_api_key=CG-wmqpxHhewcBB9CQYF7kCY6Ji"
+      );
+      console.log(response.data.coins);
+      dispatch(setCryptoLiked(response.data.coins));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  getLiked();
   }, []);
 
   return (
@@ -38,10 +37,10 @@ const Crypto = () => {
         <p>Welcome to Crypto Price Analysis</p>
       </div>
       <div className="flex flex-wrap justify-around gap-2 gap-y-4">
-        {Object.keys(cryptoData).length != 0 &&
-        cryptoData.data.coins.length != 0 ? (
-          cryptoData.data.coins.map((crypto, idx) => {
-            return <CryptoCard key={idx + "cryptoData"} Data={crypto} />;
+        {Object.keys(cryptoLiked).length != 0 &&
+        cryptoLiked.length != 0 ? (
+          cryptoLiked.map((crypto, idx) => {
+            return <CryptoCard key={idx + "cryptoLiked"} item={crypto} />;
           })
         ) : (
           <Oval

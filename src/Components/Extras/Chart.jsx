@@ -7,6 +7,10 @@ import {
   PointElement,
   LineElement,
   BarElement,
+  PieController,
+  DoughnutController,
+  
+  ArcElement,
   Filler,
   Title,
   Tooltip,
@@ -19,10 +23,13 @@ import { useSelector } from "react-redux";
 ChartJS.register(
   LineController,
   BarController,
+  PieController,
+  DoughnutController,
   CategoryScale,
   LinearScale,
   PointElement,
   LineElement,
+  ArcElement,
   BarElement,
   Filler,
   Title,
@@ -48,7 +55,11 @@ const Chart = ({ chartData, labels, text, type }) => {
               label: `Population Size`,
               data: chartData,
               fill: false,
-              backgroundColor: "rgb(43, 181, 42, 0.7)",
+              backgroundColor: [
+                'rgb(255, 99, 132)',
+                'rgb(54, 162, 235)',
+                'rgb(255, 205, 86)'
+              ],
               borderColor: "#2BB52A",
               borderWidth: 3,
               pointStyle: "rectRounded",

@@ -186,7 +186,7 @@ const Population = () => {
               chartData={chartData}
               labels={labels}
               text={"Population Bar Chart"}
-              type={"bar"}
+              type={"doughnut"}
             />
           </>
         ) : (
@@ -227,7 +227,7 @@ const Population = () => {
         </div>
       </div>
       <AlsoLike />
-      <div className="flex flex-col px-8 mt-4">
+      {/* <div className="flex flex-col px-8 mt-4">
         <div className="flex flex-col gap-4 text-white font-light">
           <h1 className="text-brightGreen text-2xl font-bold">
             MetaMask Wallet
@@ -295,7 +295,7 @@ const Population = () => {
             )}
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

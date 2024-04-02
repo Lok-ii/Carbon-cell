@@ -1,27 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    cryptoData: {},
-    bitCoinData: [],
-    cryptoLiked : []
-  }
+  cryptoData: [],
+  bitCoinData: [],
+  cryptoLiked: {},
+};
 
 const cryptoSlice = createSlice({
   name: "crypto",
   initialState,
   reducers: {
     setCrypto: (state, action) => {
-        state.cryptoData = action.payload;
+      state.cryptoData = action.payload;
     },
     setBitCoinData: (state, action) => {
-        state.bitCoinData = action.payload;
+      state.bitCoinData = action.payload;
     },
-    setCryptoLiked : (state, action) => {
-      state.cryptoLiked = action.payload.splice(0, 8);
-    }
+    setCryptoLiked: (state, action) => {
+      state.cryptoLiked = action.payload;
+    },
   },
 });
 
-export const { setCrypto, setBitCoinData, setCryptoLiked } = cryptoSlice.actions;
+export const { setCrypto, setBitCoinData, setCryptoLiked } =
+  cryptoSlice.actions;
 
 export default cryptoSlice.reducer;

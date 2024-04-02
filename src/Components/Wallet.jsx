@@ -90,7 +90,7 @@ const Wallet = () => {
   return (
     <div
       className={`fixed top-0 right-0 transition-all duration-300 ease-in-out  ${
-        sidebarToggle ? "w-[80%]" : "md:w-[96%] w-[92%]"
+        sidebarToggle ? "w-[80%]" : "md:w-[98%] w-[92%]"
       } overflow-y-scroll text-white bg-blackish transition-all duration-300 ease-in-out flex flex-col items-center gap-12`}
     >
       <div className="w-full flex flex-wrap gap-y-8 items-center justify-between bg-[#1D1F23] p-8">
