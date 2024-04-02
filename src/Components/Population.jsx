@@ -48,9 +48,9 @@ const Population = () => {
         console.log(response.data);
         dispatch(
           setBitCoinData([
-            { ...response.data.bpi.USD, color: "#1A9354" },
-            { ...response.data.bpi.GBP, color: "#9FFE9C" },
-            { ...response.data.bpi.EUR, color: "#77F435" },
+            { ...response.data.bpi.USD, color: "#22A079" },
+            { ...response.data.bpi.GBP, color: "#41C0F5" },
+            { ...response.data.bpi.EUR, color: "#7894B4" },
           ])
         );
       } catch (error) {
