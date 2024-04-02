@@ -2,10 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   sidebarToggle: false,
-  populationData: [],
-  xAxis: "Population",
-  yAxis: "Year",
-  direction: "x"
+  populationData: {},
+  chartData: [],
+  labels: [],
 };
 
 const populationSlice = createSlice({
@@ -13,19 +12,16 @@ const populationSlice = createSlice({
   initialState,
   reducers: {
     setPopulation: (state, action) => {
-      state.populationData = [...action.payload];
+      state.populationData = { ...action.payload };
+      state.chartData = state.populationData.data
+        .map((item) => item.Population)
+        .reverse();
+      state.labels = state.populationData.data
+        .map((item) => item.Year)
+        .reverse();
     },
     setToggle: (state) => {
       state.sidebarToggle = !state.sidebarToggle;
-    },
-    setXAxis: (state, action) => {
-      state.xAxis = action.payload;
-    },
-    setYAxis: (state, action) => {
-      state.yAxis = action.payload;
-    },
-    setDirection: (state, action) => {
-      state.direction = action.payload;
     },
   },
 });
@@ -37,7 +33,7 @@ export const {
   setChartInstance,
   setXAxis,
   setYAxis,
-  setDirection
+  setDirection,
 } = populationSlice.actions;
 
 export default populationSlice.reducer;

@@ -6,143 +6,105 @@ import {
   LinearScale,
   PointElement,
   LineElement,
+  BarElement,
   Filler,
   Title,
   Tooltip,
   Legend,
   LineController,
+  BarController,
 } from "chart.js";
-import { useDispatch, useSelector } from "react-redux";
-import { setDirection, setXAxis, setYAxis } from "../../redux/populationSlice";
+import { useSelector } from "react-redux";
 
-// Register the components you will use
 ChartJS.register(
   LineController,
+  BarController,
   CategoryScale,
   LinearScale,
   PointElement,
   LineElement,
+  BarElement,
   Filler,
   Title,
   Tooltip,
   Legend
 );
 
-const Chart = ({ Data }) => {
+const Chart = ({ chartData, labels, text, type }) => {
   const canvasRef = useRef(null);
-  const dispatch = useDispatch();
-  const { xAxis, yAxis, direction } = useSelector((store) => store.population);
-
-  const chartData = Data.populationCounts
-    .filter((data, idx) => {
-      return idx > 20;
-    })
-    .map((data) => data.value);
-  console.log(chartData);
-
-  const labels = Data.populationCounts
-    .filter((data, idx) => {
-      return idx > 20;
-    })
-    .map((data) => data.year);
-  console.log(labels);
-
-  const getWidth = () => {
-    
-    window.innerWidth <= 500
-      ? dispatch(setXAxis("Population"))
-      : dispatch(setXAxis("Year"));
-    window.innerWidth <= 500
-      ? dispatch(setYAxis("Year"))
-      : dispatch(setYAxis("Population"));
-      window.innerWidth <= 500
-        ? dispatch(setDirection("y"))
-        : dispatch(setDirection("x"));
-  }
-
-  window.onresize = () => getWidth();
-  window.onload = () => getWidth();
-
+  const { direction } = useSelector((store) => store.population);
 
   useEffect(() => {
     let localChartInstance = null;
-    if (canvasRef.current && chartData && labels) {
+    if (canvasRef.current) {
       const ctx = canvasRef.current.getContext("2d");
 
-      //   if (window.myLineChart instanceof ChartJS) {
-      //     window.myLineChart.destroy();
-      //   }
-
       localChartInstance = new ChartJS(ctx, {
-        type: "line",
+        type: type,
         data: {
           labels: labels,
           datasets: [
             {
-              label: `Population Size of ${Data.country}`,
+              label: `Population Size`,
               data: chartData,
-              fill: true,
-              backgroundColor: "rgb(43, 181, 42, 0.2)", // Fill color under the line
-              borderColor: "#D6D9D7", // Line color
-              borderWidth: 1, // Creates a dashed line [dashLength, spaceLength]
+              fill: false,
+              backgroundColor: "rgb(43, 181, 42, 0.7)",
+              borderColor: "#2BB52A",
+              borderWidth: 3,
               pointStyle: "rectRounded",
-              pointBackgroundColor: "#2BB52A", // Color of the points
-              pointBorderColor: "#fff", // Border color of the points
-              pointHoverBackgroundColor: "#fff", // Background color of points upon hover
-              pointHoverBorderColor: "#2BB52A", // Border color of points upon hover
-              pointRadius: 3, // Radius of the point
-              pointHoverRadius: 8, // Radius of the point on hover
-              tension: 2, // Bezier curve tension of the line. Set to 0 for straight lines.
+              pointBackgroundColor: "#2BB52A",
+              pointBorderColor: "#fff",
+              pointHoverBackgroundColor: "#fff",
+              pointHoverBorderColor: "#2BB52A",
+              pointRadius: 7,
+              pointHoverRadius: 10,
+              tension: 0.2,
             },
           ],
         },
         options: {
-          indexAxis: direction,
+          indexAxis: "x",
           scales: {
             y: {
-              beginAtZero: true, // Ensures the scale starts from zero
+              beginAtZero: false,
               grid: {
-                color: "#D6D9D7", // Color of the grid lines
-                borderColor: "#D6D9D7", // Color of the axis line
+                color: "rgba(0, 0, 0, 0.3)",
+                borderColor: "#D6D9D7",
               },
               ticks: {
-                color: "#D6D9D7", // Color of the axis labels
+                color: "#D6D9D7",
                 callback: function (value) {
-                  // Custom formatting of the axis labels
-                  if(direction === "x") {
-                    return value / 1000000 + " M";
-                  }else{
-                    return value + 1981;
-                  }
+                  return value / 1000000 + " M";
                 },
               },
               title: {
                 display: true,
-                text: yAxis,
+                text: "Population",
               },
             },
             x: {
               grid: {
-                display: false, // Hides the grid lines for this axis
+                display: true,
+                color: "rgba(0, 0, 0, 0.3)",
               },
               ticks: {
-                color: "#D6D9D7", // Color of the axis labels
+                color: "#D6D9D7",
               },
               title: {
                 display: true,
-                text: xAxis,
+                text: "Year",
               },
             },
           },
           tooltips: {
-            enabled: true, // Enable or disable tooltips
-            mode: "index", // Show tooltips for all items in the dataset at the current index
-            intersect: false, // Show tooltips even when not exactly hovering over an item
-            backgroundColor: "rgba(0, 0, 0, 0.8)", // Background color of tooltips
-            titleFontColor: "#ffffff", // Color of the tooltip title
-            bodyFontColor: "#ffffff", // Color of the tooltip body
-            borderColor: "#ffffff", // Border color of the tooltip
-            borderWidth: 1, // Border width of the tooltip
+            enabled: true,
+            mode: "index",
+            intersect: false,
+            backgroundColor: "rgba(0, 0, 0, 0.8)",
+            titleFontColor: "#ffffff",
+            bodyFontColor: "#ffffff",
+            borderColor: "#ffffff",
+            borderWidth: 1,
             callbacks: {
               label: function (tooltipItem, data) {
                 let label = data.datasets[tooltipItem.datasetIndex].label || "";
@@ -154,21 +116,21 @@ const Chart = ({ Data }) => {
               },
             },
           },
-          maintainAspectRatio: false, // Add this to maintain the aspect ratio
+          maintainAspectRatio: false,
           responsive: true,
           animation: {
-            duration: 1000, // General animation time
-            easing: "easeOutBounce", // Easing function to use
+            duration: 1000,
+            easing: "easeOutBounce",
           },
           plugins: {
-            filler: true,
+            filler: false,
             legend: {
-              display: true, // Toggle display of the legend
-              position: "top", // Position the legend on the top
+              display: true,
+              position: "top",
               labels: {
-                color: "#D6D9D7", // Color of the legend text
+                color: "#D6D9D7",
                 font: {
-                  size: 14, // Font size of the legend text
+                  size: 14,
                 },
               },
             },
@@ -179,11 +141,12 @@ const Chart = ({ Data }) => {
     return () => {
       localChartInstance.destroy();
     };
-  }, [chartData, labels]);
+  }, [chartData, direction, labels, type]);
   return (
-    <div className="md:w-[550px] 0:w-[280px] 475:w-[425px] h-[550px] sm:[450px] md:h-[450px] flex flex-col flex-grow gap-4 bg-darkGray p-4 rounded-xl">
+    <div className="md:w-[48%] 0:w-[280px] 475:w-[425px] h-[550px] sm:[450px] md:h-[400px] flex flex-col gap-4 bg-darkGray p-4 rounded-xl">
       <div className="flex justify-between">
-        <p className="text-[1.25rem] font-medium">{Data.country}</p>
+        <p className="text-[1.25rem] font-medium">{text}</p>
+        <p className="text-lightGray">United States</p>
       </div>
       <div className="w-full h-full">
         <canvas className="" ref={canvasRef}></canvas>
@@ -193,15 +156,11 @@ const Chart = ({ Data }) => {
 };
 
 Chart.propTypes = {
-  Data: PropTypes.shape({
-    country: PropTypes.string.isRequired,
-    populationCounts: PropTypes.arrayOf(
-      PropTypes.shape({
-        year: PropTypes.number.isRequired,
-        value: PropTypes.number.isRequired,
-      })
-    ).isRequired,
-  }).isRequired,
+  Data: PropTypes.any,
+  chartData: PropTypes.array.isRequired,
+  labels: PropTypes.array,
+  text: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 export default Chart;

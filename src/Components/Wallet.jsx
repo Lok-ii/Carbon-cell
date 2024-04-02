@@ -89,22 +89,30 @@ const Wallet = () => {
 
   return (
     <div
-      className={`fixed top-0 text-white right-0 ${
-        sidebarToggle ? "w-[80%]" : "w-[96%]"
-      } h-[100%] overflow-y-auto bg-blackish transition-all duration-300 ease-in-out flex flex-col items-center gap-12`}
+      className={`fixed top-0 right-0 transition-all duration-300 ease-in-out  ${
+        sidebarToggle ? "w-[80%]" : "md:w-[96%] w-[92%]"
+      } overflow-y-scroll text-white bg-blackish transition-all duration-300 ease-in-out flex flex-col items-center gap-12`}
     >
-      <div className="w-full flex flex-wrap gap-y-8 flex-wrap items-center justify-between bg-[#1D1F23] p-8">
+      <div className="w-full flex flex-wrap gap-y-8 items-center justify-between bg-[#1D1F23] p-8">
         <h1 className="wallet-name font-bold text-[1rem] md:text-[2rem]">
           Wallet &#40;by MetaMask&#41;
         </h1>
         <div className="">
           {!hasProvider && (
-            <a href="https://metamask.io" target="_blank" className="py-2 px-8 text-[#77ECF0] bg-blackish rounded-lg">
+            <a
+              href="https://metamask.io"
+              target="_blank"
+              className="py-2 px-8 text-[#77ECF0] bg-blackish rounded-lg"
+            >
               Install MetaMask
             </a>
           )}
           {window.ethereum?.isMetaMask && wallet.accounts.length < 1 && (
-            <button disabled={isConnecting} onClick={connectMetaMask} className="py-2 px-8 text-[#77ECF0] bg-blackish rounded-lg">
+            <button
+              disabled={isConnecting}
+              onClick={connectMetaMask}
+              className="py-2 px-8 text-[#77ECF0] bg-blackish rounded-lg"
+            >
               Connect MetaMask
             </button>
           )}
@@ -133,17 +141,29 @@ const Wallet = () => {
         </div>
         {wallet.accounts.length > 0 && (
           <div className="w-full flex flex-col items-center gap-4">
-            <div className="w-full flex items-center justify-between flex-wrap  border-brightGreen border-b-[1px] py-2 overflow-hidden" >
-              <span className="text-brightGreen font-semibold text-lg w-[50%]">Wallet Accounts: </span> <span className="w-[50% ]">{wallet.accounts[0]}</span>
+            <div className="w-full flex items-center justify-between flex-wrap  border-brightGreen border-b-[1px] py-2 overflow-hidden">
+              <span className="text-brightGreen font-semibold text-lg w-[50%]">
+                Wallet Accounts:{" "}
+              </span>{" "}
+              <span className="w-[50% ]">{wallet.accounts[0]}</span>
             </div>
             <div className="w-full flex items-center justify-between flex-wrap border-brightGreen border-b-[1px] py-2">
-              <span className="text-brightGreen font-semibold text-lg">Wallet Balance: </span> <span className="">{wallet.balance}</span>
+              <span className="text-brightGreen font-semibold text-lg">
+                Wallet Balance:{" "}
+              </span>{" "}
+              <span className="">{wallet.balance}</span>
             </div>
             <div className="w-full flex items-center justify-between flex-wrap border-brightGreen border-b-[1px] py-2">
-              <span className="text-brightGreen font-semibold text-lg">Hex ChainId: </span> <span className="">{wallet.chainId}</span>
+              <span className="text-brightGreen font-semibold text-lg">
+                Hex ChainId:{" "}
+              </span>{" "}
+              <span className="">{wallet.chainId}</span>
             </div>
             <div className="w-full flex items-center justify-between flex-wrap border-brightGreen border-b-[1px] py-2">
-              <span className="text-brightGreen font-semibold text-lg">Numeric ChainId: </span> <span className="">{formatChainAsNum(wallet.chainId)}</span>
+              <span className="text-brightGreen font-semibold text-lg">
+                Numeric ChainId:{" "}
+              </span>{" "}
+              <span className="">{formatChainAsNum(wallet.chainId)}</span>
             </div>
           </div>
         )}

@@ -1,11 +1,11 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./App.css";
-import Population from "./Components/Population";
 import Layout from "./Components/Layout";
-import Crypto from "./Components/Crypto";
+import Crypto from "./Components/Crypto.jsx";
 import Wallet from "./Components/Wallet";
 import { Provider } from "react-redux";
 import { store } from "./redux/store.js"
+import Home from "./Components/Home.jsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -15,14 +15,14 @@ function App() {
       children: [
         {
           path: "/",
-          element: <Population />,
+          element: <Home />,
         },
         {
-          path: "crypto",
+          path: "/crypto",
           element: <Crypto />,
         },
         {
-          path: "wallet",
+          path: "/wallet",
           element: <Wallet />,
         },
       ],
