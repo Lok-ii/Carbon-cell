@@ -37,7 +37,7 @@ ChartJS.register(
   Legend
 );
 
-const Chart = ({ chartData, labels, text, type }) => {
+const Chart = ({ chartData, labels, text, type, w }) => {
   const canvasRef = useRef(null);
   const { direction } = useSelector((store) => store.population);
 
@@ -60,7 +60,7 @@ const Chart = ({ chartData, labels, text, type }) => {
                 'rgb(54, 162, 235)',
                 'rgb(255, 205, 86)'
               ],
-              borderColor: "#2BB52A",
+              borderColor: 'white',
               borderWidth: 3,
               pointStyle: "rectRounded",
               pointBackgroundColor: "#2BB52A",
@@ -79,30 +79,34 @@ const Chart = ({ chartData, labels, text, type }) => {
             y: {
               beginAtZero: false,
               grid: {
+                dispalay: type === "line" ? true : false,
                 color: "rgba(0, 0, 0, 0.3)",
                 borderColor: "#D6D9D7",
               },
               ticks: {
                 color: "#D6D9D7",
                 callback: function (value) {
-                  return value / 1000000 + " M";
+                  return type === "line" ? value / 1000000 + "M" : ""
                 },
               },
               title: {
-                display: true,
+                display: type === "line" ? true : false,
                 text: "Population",
               },
             },
             x: {
               grid: {
-                display: true,
+                display: type === "line" ? true : false,
                 color: "rgba(0, 0, 0, 0.3)",
               },
               ticks: {
                 color: "#D6D9D7",
+                callback: function (value) {
+                  return type === "line" ? value + 2013 : ""
+                },
               },
               title: {
-                display: true,
+                display: type === "line" ? true : false,
                 text: "Year",
               },
             },
@@ -154,13 +158,16 @@ const Chart = ({ chartData, labels, text, type }) => {
     };
   }, [chartData, direction, labels, type]);
   return (
-    <div className="md:w-[48%] 0:w-[280px] 475:w-[425px] h-[550px] sm:[450px] md:h-[400px] flex flex-col gap-4 bg-darkGray p-4 rounded-xl">
-      <div className="flex justify-between">
+    <div className={`${w === "60" ? "md:w-[58%]" : "md:w-[38%]"} 0:w-[280px] 475:w-[425px] h-[550px] sm:[450px] md:h-[420px] flex flex-col items-center gap-4 bg-darkGray p-4 rounded-xl`}>
+      <div className="w-full flex justify-between">
         <p className="text-[1.25rem] font-medium">{text}</p>
         <p className="text-lightGray">United States</p>
       </div>
       <div className="w-full h-full">
         <canvas className="" ref={canvasRef}></canvas>
+      </div>
+      <div>
+        {type === "doughnut" ? <a className="" href="http://www.census.gov/programs-surveys/acs/" target="_blank"><button className="py-2 px-4 rounded-lg bg-[#E8B342] font-semibold ">Learn More</button></a> : ""}
       </div>
     </div>
   );

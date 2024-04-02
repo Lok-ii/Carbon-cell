@@ -181,12 +181,14 @@ const Population = () => {
               labels={labels}
               text={"Population Line Chart"}
               type={"line"}
+              w={"60"}
             />
             <Chart
               chartData={chartData}
               labels={labels}
               text={"Population Bar Chart"}
               type={"doughnut"}
+              w={"40"}
             />
           </>
         ) : (
