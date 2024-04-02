@@ -91,7 +91,7 @@ const Wallet = () => {
     <div
       className={`fixed top-0 right-0 transition-all duration-300 ease-in-out  ${
         sidebarToggle ? "w-[80%]" : "md:w-[98%] w-[92%]"
-      } overflow-y-scroll text-white bg-blackish transition-all duration-300 ease-in-out flex flex-col items-center gap-12`}
+      } overflow-y-scroll h-full text-white bg-blackish transition-all duration-300 ease-in-out flex flex-col items-center gap-12`}
     >
       <div className="w-full flex flex-wrap gap-y-8 items-center justify-between bg-[#1D1F23] p-8">
         <h1 className="wallet-name font-bold text-[1rem] md:text-[2rem]">
@@ -126,6 +126,75 @@ const Wallet = () => {
               {formatAddress(wallet.accounts[0])}
             </a>
           )}
+        </div>
+      </div>
+      <div className="flex flex-col px-8 mt-4">
+        <div className="flex flex-col gap-4 text-white font-light">
+          <h1 className="text-brightGreen text-2xl font-bold">
+            MetaMask Wallet
+          </h1>
+          <p>
+            MetaMask is a software cryptocurrency wallet used to interact with
+            the Ethereum blockchain.MetaMask allows users to store and manage
+            account keys, broadcast transactions, send and receive
+            Ethereum-based cryptocurrencies and tokens, and securely connect to
+            decentralized applications through a compatible web browser or the
+            mobile app&apos;s built-in browser.
+          </p>
+          <p>
+            Click on{" "}
+            <span className="text-brightGreen font-medium">Connect wallet</span>{" "}
+            to get Started !<br />
+            To get connected with wallet, you must have MetaMask Downloaded, To
+            download MetaMask{" "}
+            <a
+              href="https://chromewebstore.google.com/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn"
+              target="_blank"
+              className="text-brightGreen no-underline font-semibold"
+            >
+              click here
+            </a>
+            .
+          </p>
+        </div>
+        <div className="flex flex-col items-center">
+          <div>
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg"
+              className="w-full h-full"
+              alt=""
+            />
+          </div>
+          <div className="">
+            {!hasProvider && (
+              <a
+                href="https://metamask.io"
+                target="_blank"
+                className="py-2 px-8 text-[#77ECF0] bg-darkGray rounded-lg"
+              >
+                Install MetaMask
+              </a>
+            )}
+            {window.ethereum?.isMetaMask && wallet.accounts.length < 1 && (
+              <button
+                disabled={isConnecting}
+                onClick={connectMetaMask}
+                className="py-2 px-8 text-[#77ECF0] bg-darkGray rounded-lg"
+              >
+                Connect MetaMask
+              </button>
+            )}
+            {hasProvider && wallet.accounts.length > 0 && (
+              <a
+                className="text_link tooltip-bottom border-[1px] rounded-lg p-4"
+                href={`https://etherscan.io/address/${wallet.accounts[0]}`}
+                target="_blank"
+                data-tooltip="Open in Block Explorer"
+              >
+                {formatAddress(wallet.accounts[0])}
+              </a>
+            )}
+          </div>
         </div>
       </div>
       <div className="w-[15rem] md:w-[35rem] flex flex-col justify-around gap-4 bg-darkGray p-4 rounded-xl m-4">
