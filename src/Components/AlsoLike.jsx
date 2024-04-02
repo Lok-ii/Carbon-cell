@@ -24,9 +24,9 @@ const AlsoLike = () => {
     getLiked();
   }, []);
   return (
-    <div className="flex flex-col gap-8 px-8">
+    <div className="flex flex-col gap-8 px-2 md:px-8">
       <h1 className="text-2xl font-bold">You may also like</h1>
-      <div className="flex flex-wrap items-center justify-around gap-y-4">
+      <div className="w-full flex flex-wrap items-center justify-around gap-4">
         {cryptoLiked &&
           cryptoLiked.map((item) => {
             const value = item.item;
@@ -34,7 +34,7 @@ const AlsoLike = () => {
             return (
               <div
                 key={value.id}
-                className="w-[20rem] bg-darkGray p-4 rounded-lg flex flex-col gap-4"
+                className="w-[20rem] bg-darkGray p-4 rounded-lg flex flex-col gap-4 flex-grow"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
